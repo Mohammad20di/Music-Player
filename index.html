@@ -6,45 +6,15 @@
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Amiri&display=swap');
 
-    body {
-      background-color: black;
-      color: #555;
+    .naskh-text {
       font-family: 'Amiri', serif;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: space-between;
-      height: 100vh;
-      margin: 0;
-      padding: 50px 20px;
-      box-sizing: border-box;
-    }
-
-    h2 {
-      margin-bottom: 20px;
-    }
-
-    audio {
-      margin-bottom: auto;
-    }
-
-    #typedText {
-      font-size: 25px;
-      white-space: nowrap;
-      overflow: hidden;
-      border-right: 2px solid #555;
-      animation: blink 0.7s infinite;
-      margin-top: 40px;
-    }
-
-    @keyframes blink {
-      0%, 100% { border-color: #555; }
-      50% { border-color: transparent; }
+      font-size: 18px;
+      color: #555;
+      margin-top: 20px;
     }
   </style>
 </head>
-<body>
-
+<body style="text-align:center; margin-top:50px;">
   <h2>🎵 امید - باران می‌بارد 🎵</h2>
 
   <audio controls>
@@ -52,23 +22,8 @@
     مرورگر شما از پخش صوت پشتیبانی نمی‌کند.
   </audio>
 
-  <div id="typedText"></div>
-
-  <script>
-    const text = "حسرتت در دلم چه دلبرانه می‌رقصد";
-    const speed = 100;
-
-    let i = 0;
-    function typeWriter() {
-      if (i < text.length) {
-        document.getElementById("typedText").innerHTML += text.charAt(i);
-        i++;
-        setTimeout(typeWriter, speed);
-      }
-    }
-
-    window.onload = typeWriter;
-  </script>
-
+  <p style="margin-top:20px; font-size:25px; color:#555;">
+    حسرتت در دلم چه دلبرانه میرقصد
+  </p>
 </body>
 </html>
