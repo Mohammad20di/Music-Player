@@ -56,35 +56,7 @@
 
   <script>
     const text = "حسرتت در دلم چه دلبرانه می‌رقصد";
-    const speed = 100;
-
-    let i = 0;
-    function typeWriter() {
-      if (i < text.length) {
-        document.getElementById("typedText").innerHTML += text.charAt(i);
-        i++;
-        setTimeout(typeWriter, speed);
-      }
-    }
-
-    window.onload = typeWriter;
-  </script>
-
-</body>
-</html><body>
-
-  <h2>🎵 امید - باران می‌بارد 🎵</h2>
-
-  <audio controls>
-    <source src="Omid-Baran-Mibarad.mp3" type="audio/mpeg">
-    مرورگر شما از پخش صوت پشتیبانی نمی‌کند.
-  </audio>
-
-  <div id="typedText"></div>
-
-  <script>
-    const text = "حسرتت در دلم چه دلبرانه می‌رقصد";
-    const speed = 100; // سرعت تایپ به میلی‌ثانیه
+    const speed = 60;
 
     let i = 0;
     function typeWriter() {
