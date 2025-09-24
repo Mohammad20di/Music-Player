@@ -24,7 +24,7 @@
     }
 
     h2 {
-      font-size: 25px;
+      font-size: 36px;
       margin-bottom: 20px;
       z-index: 1;
     }
@@ -76,7 +76,7 @@
       }
 
       .lyric {
-        font-size: 30px;
+        font-size: 18px;
       }
 
       audio {
@@ -89,7 +89,7 @@
 
   <h2>🎵 امید - باران می‌بارد 🎵</h2>
 
-  <audio id="audio" controls>
+  <audio id="audio" controls autoplay>
     <source src="Omid-Baran-Mibarad.mp3" type="audio/mpeg">
     مرورگر شما از پخش صوت پشتیبانی نمی‌کند.
   </audio>
@@ -110,7 +110,7 @@
     const audio = document.getElementById("audio");
     const lyric = document.getElementById("lyric");
     const text = "حسرتت در دلم چه دلبرانه می‌رقصد";
-    const duration = 6000;
+    const duration = 4000;
     let index = 0;
 
     function typeWriter() {
@@ -125,10 +125,21 @@
       }, interval);
     }
 
-    audio.addEventListener("play", () => {
-      lyric.textContent = "";
-      index = 0;
-      setTimeout(typeWriter, 500);
+    // اگر آهنگ خودکار پخش شد، افکت تایپ هم فعال شود
+    window.addEventListener("load", () => {
+      setTimeout(() => {
+        if (!audio.paused) {
+          lyric.textContent = "";
+          index = 0;
+          typeWriter();
+        } else {
+          audio.addEventListener("play", () => {
+            lyric.textContent = "";
+            index = 0;
+            setTimeout(typeWriter, 500);
+          });
+        }
+      }, 500);
     });
   </script>
 
