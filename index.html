@@ -9,31 +9,51 @@
     body {
       margin: 0;
       height: 100vh;
-      background-color: black;
-      color: #555;
       font-family: 'Amiri', serif;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
       text-align: center;
+      position: relative;
+      overflow: hidden;
+      background-color: black;
+      color: #ccc;
     }
 
     h2 {
       margin-bottom: 20px;
+      z-index: 1;
     }
 
     audio {
       margin-bottom: 30px;
+      z-index: 1;
     }
 
     p {
       font-size: 25px;
       margin: 0;
+      z-index: 1;
+    }
+
+    .rain {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      background-image: url('https://i.imgur.com/NM3vYzL.gif');
+      background-size: cover;
+      opacity: 0.2;
+      z-index: 0;
     }
   </style>
 </head>
 <body>
+
+  <div class="rain"></div>
 
   <h2>🎵 امید - باران می‌بارد 🎵</h2>
 
