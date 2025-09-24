@@ -15,45 +15,38 @@
       justify-content: center;
       align-items: center;
       text-align: center;
-      position: relative;
-      overflow: hidden;
       background-color: black;
       color: #ccc;
+      overflow: hidden;
+      position: relative;
     }
 
-    h2 {
-      margin-bottom: 20px;
-      z-index: 1;
-    }
-
-    audio {
-      margin-bottom: 30px;
+    h2, audio, p {
       z-index: 1;
     }
 
     p {
       font-size: 25px;
-      margin: 0;
-      z-index: 1;
+      margin-top: 30px;
     }
 
-    .rain {
+    .drop {
       position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      background-image: url('https://i.imgur.com/NM3vYzL.gif');
-      background-size: cover;
-      opacity: 0.2;
-      z-index: 0;
+      top: -10px;
+      width: 2px;
+      height: 15px;
+      background: rgba(255, 255, 255, 0.3);
+      animation: fall linear infinite;
+    }
+
+    @keyframes fall {
+      to {
+        transform: translateY(100vh);
+      }
     }
   </style>
 </head>
 <body>
-
-  <div class="rain"></div>
 
   <h2>🎵 امید - باران می‌بارد 🎵</h2>
 
@@ -63,6 +56,16 @@
   </audio>
 
   <p>حسرتت در دلم چه دلبرانه میرقصد</p>
+
+  <script>
+    for (let i = 0; i < 100; i++) {
+      let drop = document.createElement("div");
+      drop.className = "drop";
+      drop.style.left = Math.random() * window.innerWidth + "px";
+      drop.style.animationDuration = 0.5 + Math.random() * 1.5 + "s";
+      document.body.appendChild(drop);
+    }
+  </script>
 
 </body>
 </html>
