@@ -3,12 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <title>🎵 امید - باران می‌بارد 🎵</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Amiri&display=swap');
 
     body {
       margin: 0;
-      height: 100vh;
+      padding: 0;
       font-family: 'Amiri', serif;
       display: flex;
       flex-direction: column;
@@ -19,15 +20,24 @@
       color: #ccc;
       overflow: hidden;
       position: relative;
+      min-height: 100vh;
     }
 
-    h2, audio, p {
-      z-index: 1;
+    h2 {
+      font-size: 28px;
+      margin: 20px 10px;
+    }
+
+    audio {
+      width: 60%;
+      max-width: 400px;
+      margin-top: 20px;
     }
 
     p {
-      font-size: 25px;
+      font-size: 22px;
       margin-top: 30px;
+      padding: 0 15px;
     }
 
     .drop {
@@ -44,6 +54,26 @@
         transform: translateY(100vh);
       }
     }
+
+    /* 📱 تنظیمات مخصوص موبایل */
+    @media (max-width: 600px) {
+      h2 {
+        font-size: 20px;
+      }
+
+      p {
+        font-size: 16px;
+        margin-top: 20px;
+      }
+
+      audio {
+        width: 90%;
+      }
+
+      body {
+        padding: 20px 10px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -55,7 +85,7 @@
     مرورگر شما از پخش صوت پشتیبانی نمی‌کند.
   </audio>
 
-  <p>حسرتت در دلم چه دلبرانه میرقصد</p>
+  <p>حسرتت در دلم چه دلبرانه می‌رقصد</p>
 
   <script>
     for (let i = 0; i < 100; i++) {
