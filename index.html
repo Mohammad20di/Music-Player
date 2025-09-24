@@ -11,27 +11,26 @@
       margin: 0;
       padding: 0;
       font-family: 'Amiri', serif;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
       background-color: black;
       color: #ccc;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
       overflow: hidden;
-      position: relative;
       min-height: 100vh;
+      position: relative;
     }
 
     h2 {
       font-size: 28px;
-      margin: 20px 10px;
+      margin-top: 30px;
     }
 
     audio {
+      margin-top: 20px;
       width: 60%;
       max-width: 400px;
-      margin-top: 20px;
     }
 
     .lyric {
@@ -40,6 +39,15 @@
       padding: 0 15px;
       font-weight: bold;
       color: #eee;
+    }
+
+    canvas {
+      margin-top: 30px;
+      border-radius: 10px;
+      background-color: #111;
+      width: 90%;
+      max-width: 600px;
+      height: 100px;
     }
 
     .drop {
@@ -63,7 +71,7 @@
       }
 
       .lyric {
-        font-size: 25px;
+        font-size: 20px;
         margin-top: 20px;
       }
 
@@ -71,8 +79,8 @@
         width: 90%;
       }
 
-      body {
-        padding: 20px 10px;
+      canvas {
+        height: 80px;
       }
     }
   </style>
@@ -81,14 +89,17 @@
 
   <h2>🎵 امید - باران می‌بارد 🎵</h2>
 
-  <audio controls>
+  <audio id="audio" controls>
     <source src="Omid-Baran-Mibarad.mp3" type="audio/mpeg">
     مرورگر شما از پخش صوت پشتیبانی نمی‌کند.
   </audio>
 
   <p class="lyric">حسرتت در دلم چه دلبرانه می‌رقصد</p>
 
+  <canvas id="visualizer"></canvas>
+
   <script>
+    // افکت باران
     for (let i = 0; i < 100; i++) {
       let drop = document.createElement("div");
       drop.className = "drop";
@@ -96,6 +107,45 @@
       drop.style.animationDuration = 0.5 + Math.random() * 1.5 + "s";
       document.body.appendChild(drop);
     }
+
+    // اکولایزر هماهنگ با صدا
+    const audio = document.getElementById("audio");
+    const canvas = document.getElementById("visualizer");
+    const ctx = canvas.getContext("2d");
+
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    const analyser = audioCtx.createAnalyser();
+    const source = audioCtx.createMediaElementSource(audio);
+
+    source.connect(analyser);
+    analyser.connect(audioCtx.destination);
+    analyser.fftSize = 256;
+
+    const bufferLength = analyser.frequencyBinCount;
+    const dataArray = new Uint8Array(bufferLength);
+
+    function draw() {
+      requestAnimationFrame(draw);
+      analyser.getByteFrequencyData(dataArray);
+
+      ctx.fillStyle = "#111";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      const barWidth = (canvas.width / bufferLength) * 2.5;
+      let x = 0;
+
+      for (let i = 0; i < bufferLength; i++) {
+        const barHeight = dataArray[i];
+        ctx.fillStyle = `rgb(${barHeight + 100}, 255, 255)`;
+        ctx.fillRect(x, canvas.height - barHeight, barWidth, barHeight);
+        x += barWidth + 1;
+      }
+    }
+
+    audio.onplay = () => {
+      audioCtx.resume();
+      draw();
+    };
   </script>
 
 </body>
