@@ -9,36 +9,55 @@
 
     body {
       margin: 0;
-      height: 100vh;
+      padding: 0;
       font-family: 'Amiri', serif;
+      background-color: #111;
+      color: #eee;
       display: flex;
       flex-direction: column;
-      justify-content: center;
       align-items: center;
+      justify-content: center;
+      min-height: 100vh;
       text-align: center;
-      background-color: black;
-      color: #ccc;
       overflow: hidden;
       position: relative;
     }
 
+    .player {
+      background-color: #222;
+      border-radius: 20px;
+      padding: 30px;
+      width: 90%;
+      max-width: 400px;
+      box-shadow: 0 0 20px rgba(255,255,255,0.1);
+      z-index: 1;
+    }
+
     h2 {
       font-size: 36px;
-      margin-top: 20px;
+      margin-bottom: 20px;
     }
 
     audio {
-      margin-top: 30px;
-      width: 70%;
-      max-width: 500px;
+      width: 100%;
+      margin-bottom: 20px;
     }
 
     .lyric {
-      font-size: 32px;
-      margin-top: 40px;
-      padding: 0 20px;
+      font-size: 28px;
       font-weight: bold;
-      color: #eee;
+      color: #ccc;
+      margin-top: 30px;
+      min-height: 40px;
+      white-space: nowrap;
+      overflow: hidden;
+      border-right: 2px solid #ccc;
+      animation: blink 0.7s infinite;
+    }
+
+    @keyframes blink {
+      0%, 100% { border-color: transparent; }
+      50% { border-color: #ccc; }
     }
 
     .drop {
@@ -48,6 +67,7 @@
       height: 15px;
       background: rgba(255, 255, 255, 0.3);
       animation: fall linear infinite;
+      z-index: 0;
     }
 
     @keyframes fall {
@@ -58,32 +78,34 @@
 
     @media (max-width: 600px) {
       h2 {
-        font-size: 18px;
-      }
-
-      audio {
-        width: 90%;
+        font-size: 24px;
       }
 
       .lyric {
-        font-size: 25px;
-        margin-top: 30px;
+        font-size: 18px;
+      }
+
+      .player {
+        padding: 20px;
       }
     }
   </style>
 </head>
 <body>
 
-  <h2>🎵 امید - باران می‌بارد 🎵</h2>
+  <div class="player">
+    <h2>🎵 امید - باران می‌بارد 🎵</h2>
 
-  <audio controls>
-    <source src="Omid-Baran-Mibarad.mp3" type="audio/mpeg">
-    مرورگر شما از پخش صوت پشتیبانی نمی‌کند.
-  </audio>
+    <audio id="audio" controls>
+      <source src="Omid-Baran-Mibarad.mp3" type="audio/mpeg">
+      مرورگر شما از پخش صوت پشتیبانی نمی‌کند.
+    </audio>
 
-  <p class="lyric">حسرتت در دلم چه دلبرانه می‌رقصد</p>
+    <p class="lyric" id="lyric"></p>
+  </div>
 
   <script>
+    // افکت باران
     for (let i = 0; i < 100; i++) {
       let drop = document.createElement("div");
       drop.className = "drop";
@@ -91,6 +113,31 @@
       drop.style.animationDuration = 0.5 + Math.random() * 1.5 + "s";
       document.body.appendChild(drop);
     }
+
+    // افکت تایپ بعد از پخش آهنگ
+    const audio = document.getElementById("audio");
+    const lyric = document.getElementById("lyric");
+    const text = "حسرتت در دلم چه دلبرانه می‌رقصد";
+    const duration = 4000; // 4 ثانیه
+    let index = 0;
+
+    function typeWriter() {
+      const interval = duration / text.length;
+      const typing = setInterval(() => {
+        lyric.textContent += text[index];
+        index++;
+        if (index >= text.length) {
+          clearInterval(typing);
+          lyric.style.borderRight = "none"; // حذف چشمک بعد از پایان
+        }
+      }, interval);
+    }
+
+    audio.addEventListener("play", () => {
+      lyric.textContent = "";
+      index = 0;
+      setTimeout(typeWriter, 500); // شروع تایپ با تأخیر کوتاه بعد از پخش
+    });
   </script>
 
 </body>
