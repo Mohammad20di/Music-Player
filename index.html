@@ -34,10 +34,12 @@
       margin-top: 20px;
     }
 
-    p {
-      font-size: 30px;
+    .lyric {
+      font-size: 32px;
       margin-top: 30px;
       padding: 0 15px;
+      font-weight: bold;
+      color: #eee;
     }
 
     .drop {
@@ -55,14 +57,13 @@
       }
     }
 
-    /* 📱 تنظیمات مخصوص موبایل */
     @media (max-width: 600px) {
       h2 {
         font-size: 20px;
       }
 
-      p {
-        font-size: 16px;
+      .lyric {
+        font-size: 30px;
         margin-top: 20px;
       }
 
@@ -85,7 +86,7 @@
     مرورگر شما از پخش صوت پشتیبانی نمی‌کند.
   </audio>
 
-  <p>حسرتت در دلم چه دلبرانه می‌رقصد</p>
+  <p class="lyric">حسرتت در دلم چه دلبرانه می‌رقصد</p>
 
   <script>
     for (let i = 0; i < 100; i++) {
