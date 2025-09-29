@@ -24,7 +24,7 @@
     }
 
     h2 {
-      font-size: 36px;
+      font-size: 25px;
       margin-bottom: 20px;
       z-index: 1;
       color: #fff;
@@ -38,13 +38,20 @@
     }
 
     .lyric {
-      font-size: 28px;
+      font-size: 33px;
       font-weight: bold;
       color: #fff;
       margin-top: 30px;
-      opacity: 0;
-      animation: fadeIn 4s ease forwards;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
       z-index: 1;
+    }
+
+    .word {
+      opacity: 0;
+      animation: fadeIn 0.5s ease forwards;
     }
 
     @keyframes fadeIn {
@@ -70,11 +77,11 @@
 
     @media (max-width: 600px) {
       h2 {
-        font-size: 24px;
+        font-size: 20px;
       }
 
       .lyric {
-        font-size: 18px;
+        font-size: 24px;
       }
 
       audio {
@@ -92,7 +99,7 @@
     مرورگر شما از پخش صوت پشتیبانی نمی‌کند.
   </audio>
 
-  <p class="lyric">حسرتت در دلم چه دلبرانه می‌رقصد</p>
+  <div class="lyric" id="lyric"></div>
 
   <script>
     // افکت قطره‌ای ساده
@@ -103,6 +110,19 @@
       drop.style.animationDuration = 0.5 + Math.random() * 1.5 + "s";
       document.body.appendChild(drop);
     }
+
+    // ظاهر شدن هر کلمه جداگانه
+    const lyric = document.getElementById("lyric");
+    const text = "حسرتت در دلم چه دلبرانه می‌رقصد";
+    const words = text.split(" ");
+
+    words.forEach((word, i) => {
+      const span = document.createElement("span");
+      span.className = "word";
+      span.textContent = word;
+      span.style.animationDelay = `${i * 0.4}s`; // فاصله بین ظاهر شدن هر کلمه
+      lyric.appendChild(span);
+    });
   </script>
 
 </body>
