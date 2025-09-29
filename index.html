@@ -47,7 +47,6 @@
       gap: 8px;
       direction: rtl;
       z-index: 1;
-      visibility: hidden; /* مخفی تا زمان پخش */
     }
 
     .word {
@@ -63,8 +62,8 @@
     .drop {
       position: absolute;
       top: -10px;
-      width: 2px;
-      height: 15px;
+      width: 3px;
+      height: 20px;
       background: rgba(255, 255, 255, 0.3);
       animation: fall linear infinite;
       z-index: 0;
@@ -112,15 +111,11 @@
       document.body.appendChild(drop);
     }
 
-    // ظاهر شدن متن بعد از پخش آهنگ
-    const audio = document.getElementById("audio");
-    const lyric = document.getElementById("lyric");
-    const text = "حسرتت در دلم چه دلبرانه می‌رقصد";
-    const words = text.split(" ");
-
-    audio.addEventListener("play", () => {
-      lyric.innerHTML = ""; // پاک‌سازی قبلی
-      lyric.style.visibility = "visible"; // نمایش شعر
+    // ظاهر شدن شعر بعد از باز شدن صفحه
+    window.addEventListener("load", () => {
+      const lyric = document.getElementById("lyric");
+      const text = "حسرتت در دلم چه دلبرانه می‌رقصد";
+      const words = text.split(" ");
 
       words.forEach((word, i) => {
         const span = document.createElement("span");
