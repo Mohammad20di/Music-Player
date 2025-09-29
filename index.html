@@ -2,7 +2,7 @@
 <html lang="fa">
 <head>
   <meta charset="UTF-8">
-  <title>🎵 امید - باران می‌بارد 🎵</title>
+  <title>🎵 امید - شبِ رقصِ قطره‌ها 🎵</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Amiri&display=swap');
@@ -13,63 +13,63 @@
       font-family: 'Amiri', serif;
       background-color: #000;
       color: #fff;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-      text-align: center;
       overflow: hidden;
       position: relative;
+      height: 100vh;
+    }
+
+    .floating {
+      position: absolute;
+      animation: floatRandom 6s infinite ease-in-out;
+    }
+
+    @keyframes floatRandom {
+      0%   { transform: translate(0, 0); }
+      25%  { transform: translate(-10px, 5px); }
+      50%  { transform: translate(8px, -8px); }
+      75%  { transform: translate(-6px, 10px); }
+      100% { transform: translate(0, 0); }
     }
 
     h2 {
       font-size: 25px;
-      margin-bottom: 20px;
-      z-index: 1;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
     }
 
     audio {
       width: 70%;
       max-width: 500px;
-      margin-bottom: 20px;
-      z-index: 1;
+      top: 80px;
+      left: 50%;
+      transform: translateX(-50%);
     }
 
     .lyric {
       font-size: 33px;
       font-weight: bold;
-      color: #fff;
-      margin-top: 30px;
+      top: 150px;
+      left: 50%;
+      transform: translateX(-50%);
+      direction: rtl;
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
       gap: 8px;
-      direction: rtl;
-      z-index: 1;
     }
 
     .word {
-      animation: floatAround 2.5s ease-in-out infinite;
+      animation: floatRandom 4s infinite ease-in-out;
       display: inline-block;
-    }
-
-    @keyframes floatAround {
-      0%   { transform: translate(0, 0); }
-      25%  { transform: translate(-2px, 2px); }
-      50%  { transform: translate(2px, -2px); }
-      75%  { transform: translate(-1px, -1px); }
-      100% { transform: translate(0, 0); }
     }
 
     .drop {
       position: absolute;
-      top: -10px;
       width: 3px;
       height: 20px;
       background: rgba(255, 255, 255, 0.3);
       animation: fall linear infinite;
-      z-index: 0;
     }
 
     @keyframes fall {
@@ -95,37 +95,37 @@
 </head>
 <body>
 
-  <h2>🎵 امید - باران می‌بارد 🎵</h2>
+  <h2 class="floating">🎵 امید - شبِ رقصِ قطره‌ها 🎵</h2>
 
-  <audio id="audio" controls>
+  <audio class="floating" controls>
     <source src="Omid-Baran-Mibarad.mp3" type="audio/mpeg">
     مرورگر شما از پخش صوت پشتیبانی نمی‌کند.
   </audio>
 
-  <div class="lyric" id="lyric"></div>
+  <div class="lyric floating" id="lyric"></div>
 
   <script>
-    // افکت قطره‌ای ساده
+    // قطره‌های باران با موقعیت و سرعت تصادفی
     for (let i = 0; i < 100; i++) {
       let drop = document.createElement("div");
       drop.className = "drop";
       drop.style.left = Math.random() * window.innerWidth + "px";
-      drop.style.animationDuration = 0.5 + Math.random() * 1.5 + "s";
+      drop.style.top = -Math.random() * 100 + "px";
+      drop.style.animationDuration = 1 + Math.random() * 2 + "s";
+      drop.style.animationDelay = Math.random() * 3 + "s";
       document.body.appendChild(drop);
     }
 
-    // نمایش شعر بعد از بارگذاری صفحه
-    window.addEventListener("load", () => {
-      const lyric = document.getElementById("lyric");
-      const text = "حسرتت در دلم چه دلبرانه می‌رقصد";
-      const words = text.split(" ");
+    // نمایش شعر با حرکت تصادفی هر کلمه
+    const lyric = document.getElementById("lyric");
+    const text = "حسرتت در دلم چه دلبرانه می‌رقصد";
+    const words = text.split(" ");
 
-      words.forEach((word) => {
-        const span = document.createElement("span");
-        span.className = "word";
-        span.textContent = word;
-        lyric.appendChild(span);
-      });
+    words.forEach(word => {
+      const span = document.createElement("span");
+      span.className = "word";
+      span.textContent = word;
+      lyric.appendChild(span);
     });
   </script>
 
