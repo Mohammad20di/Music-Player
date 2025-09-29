@@ -2,117 +2,108 @@
 <html lang="fa">
 <head>
   <meta charset="UTF-8">
-  <title>قطره‌های باران روی شیشه</title>
+  <title>🎵 امید - باران می‌بارد 🎵</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
-    html, body {
+    @import url('https://fonts.googleapis.com/css2?family=Amiri&display=swap');
+
+    body {
       margin: 0;
       padding: 0;
-      background: #000;
-      overflow: hidden;
-    }
-
-    canvas {
-      display: block;
-      position: fixed;
-      top: 0;
-      left: 0;
-      z-index: -1;
-    }
-
-    .content {
-      position: relative;
-      z-index: 1;
-      color: #eee;
       font-family: 'Amiri', serif;
+      background-color: #000;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
       text-align: center;
-      padding-top: 20vh;
+      overflow: hidden;
+      position: relative;
     }
 
     h2 {
       font-size: 36px;
       margin-bottom: 20px;
+      z-index: 1;
+      color: #fff;
     }
 
     audio {
       width: 70%;
       max-width: 500px;
+      margin-bottom: 20px;
+      z-index: 1;
+    }
+
+    .lyric {
+      font-size: 28px;
+      font-weight: bold;
+      color: #fff;
+      margin-top: 30px;
+      opacity: 0;
+      animation: fadeIn 4s ease forwards;
+      z-index: 1;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .drop {
+      position: absolute;
+      top: -10px;
+      width: 2px;
+      height: 15px;
+      background: rgba(255, 255, 255, 0.3);
+      animation: fall linear infinite;
+      z-index: 0;
+    }
+
+    @keyframes fall {
+      to {
+        transform: translateY(100vh);
+      }
+    }
+
+    @media (max-width: 600px) {
+      h2 {
+        font-size: 24px;
+      }
+
+      .lyric {
+        font-size: 18px;
+      }
+
+      audio {
+        width: 90%;
+      }
     }
   </style>
 </head>
 <body>
 
-<canvas id="rainCanvas"></canvas>
-
-<div class="content">
   <h2>🎵 امید - باران می‌بارد 🎵</h2>
-  <audio controls autoplay>
+
+  <audio id="audio" controls>
     <source src="Omid-Baran-Mibarad.mp3" type="audio/mpeg">
     مرورگر شما از پخش صوت پشتیبانی نمی‌کند.
   </audio>
-</div>
 
-<script>
-  const canvas = document.getElementById("rainCanvas");
-  const ctx = canvas.getContext("2d");
+  <p class="lyric">حسرتت در دلم چه دلبرانه می‌رقصد</p>
 
-  let width = window.innerWidth;
-  let height = window.innerHeight;
-  canvas.width = width;
-  canvas.height = height;
-
-  window.addEventListener("resize", () => {
-    width = window.innerWidth;
-    height = window.innerHeight;
-    canvas.width = width;
-    canvas.height = height;
-  });
-
-  class Drop {
-    constructor() {
-      this.x = Math.random() * width;
-      this.y = Math.random() * -height;
-      this.radius = 2 + Math.random() * 3;
-      this.speed = 1 + Math.random() * 2;
-      this.length = 20 + Math.random() * 30;
-      this.opacity = 0.2 + Math.random() * 0.3;
+  <script>
+    // افکت قطره‌ای ساده
+    for (let i = 0; i < 100; i++) {
+      let drop = document.createElement("div");
+      drop.className = "drop";
+      drop.style.left = Math.random() * window.innerWidth + "px";
+      drop.style.animationDuration = 0.5 + Math.random() * 1.5 + "s";
+      document.body.appendChild(drop);
     }
-
-    draw() {
-      ctx.beginPath();
-      const gradient = ctx.createLinearGradient(this.x, this.y, this.x, this.y + this.length);
-      gradient.addColorStop(0, `rgba(255,255,255,${this.opacity})`);
-      gradient.addColorStop(1, `rgba(255,255,255,0)`);
-      ctx.strokeStyle = gradient;
-      ctx.lineWidth = this.radius;
-      ctx.moveTo(this.x, this.y);
-      ctx.lineTo(this.x, this.y + this.length);
-      ctx.stroke();
-    }
-
-    update() {
-      this.y += this.speed;
-      if (this.y > height) {
-        this.y = Math.random() * -100;
-        this.x = Math.random() * width;
-      }
-      this.draw();
-    }
-  }
-
-  const drops = [];
-  for (let i = 0; i < 150; i++) {
-    drops.push(new Drop());
-  }
-
-  function animate() {
-    ctx.clearRect(0, 0, width, height);
-    drops.forEach(drop => drop.update());
-    requestAnimationFrame(animate);
-  }
-
-  animate();
-</script>
+  </script>
 
 </body>
 </html>
