@@ -11,7 +11,7 @@
       margin: 0;
       padding: 0;
       font-family: 'Amiri', serif;
-      background-color: #111;
+      background-color: #000;
       color: #eee;
       display: flex;
       flex-direction: column;
@@ -56,27 +56,34 @@
 
     .drop {
       position: absolute;
-      top: -10px;
-      width: 2px;
-      height: 15px;
-      background: rgba(255, 255, 255, 0.3);
-      animation: fall linear infinite;
+      top: -50px;
+      width: 8px;
+      height: 8px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
+      box-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
+      animation: slideDown linear forwards;
       z-index: 0;
     }
 
-    @keyframes fall {
-      to {
-        transform: translateY(100vh);
+    @keyframes slideDown {
+      0% {
+        transform: translateY(0) scale(1);
+        opacity: 0.8;
+      }
+      100% {
+        transform: translateY(100vh) scale(1.5);
+        opacity: 0;
       }
     }
 
     @media (max-width: 600px) {
       h2 {
-        font-size: 20px;
+        font-size: 24px;
       }
 
       .lyric {
-        font-size: 25px;
+        font-size: 18px;
       }
 
       audio {
@@ -97,14 +104,17 @@
   <p class="lyric" id="lyric"></p>
 
   <script>
-    // افکت باران
-    for (let i = 0; i < 100; i++) {
-      let drop = document.createElement("div");
+    // افکت قطره‌های شیشه‌ای
+    function createDrop() {
+      const drop = document.createElement("div");
       drop.className = "drop";
       drop.style.left = Math.random() * window.innerWidth + "px";
-      drop.style.animationDuration = 0.5 + Math.random() * 1.5 + "s";
+      drop.style.animationDuration = 3 + Math.random() * 4 + "s";
       document.body.appendChild(drop);
+      setTimeout(() => drop.remove(), 7000);
     }
+
+    setInterval(createDrop, 200); // هر 200ms یک قطره جدید
 
     // افکت تایپ بعد از پخش آهنگ
     const audio = document.getElementById("audio");
@@ -125,7 +135,6 @@
       }, interval);
     }
 
-    // اگر آهنگ خودکار پخش شد، افکت تایپ هم فعال شود
     window.addEventListener("load", () => {
       setTimeout(() => {
         if (!audio.paused) {
