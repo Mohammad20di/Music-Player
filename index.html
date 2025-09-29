@@ -27,7 +27,6 @@
       font-size: 25px;
       margin-bottom: 20px;
       z-index: 1;
-      color: #fff;
     }
 
     audio {
@@ -48,6 +47,7 @@
       gap: 8px;
       direction: rtl;
       z-index: 1;
+      visibility: hidden; /* مخفی تا زمان پخش */
     }
 
     .word {
@@ -61,14 +61,14 @@
     }
 
     .drop {
-      position: absolute;
-      top: -10px;
-      width: 2px;
-      height: 15px;
-      background: rgba(255, 255, 255, 0.3);
-      animation: fall linear infinite;
-      z-index: 0;
-    }
+  position: absolute;
+  top: -10px;
+  width: 3px; /* قبلاً 2px بود */
+  height: 20px; /* قبلاً 15px بود */
+  background: rgba(255, 255, 255, 0.3);
+  animation: fall linear infinite;
+  z-index: 0;
+}
 
     @keyframes fall {
       to {
@@ -112,17 +112,23 @@
       document.body.appendChild(drop);
     }
 
-    // ظاهر شدن هر کلمه جداگانه
+    // ظاهر شدن متن بعد از پخش آهنگ
+    const audio = document.getElementById("audio");
     const lyric = document.getElementById("lyric");
     const text = "حسرتت در دلم چه دلبرانه می‌رقصد";
     const words = text.split(" ");
 
-    words.forEach((word, i) => {
-      const span = document.createElement("span");
-      span.className = "word";
-      span.textContent = word;
-      span.style.animationDelay = `${i * 0.4}s`;
-      lyric.appendChild(span);
+    audio.addEventListener("play", () => {
+      lyric.innerHTML = ""; // پاک‌سازی قبلی
+      lyric.style.visibility = "visible"; // نمایش شعر
+
+      words.forEach((word, i) => {
+        const span = document.createElement("span");
+        span.className = "word";
+        span.textContent = word;
+        span.style.animationDelay = `${i * 0.4}s`;
+        lyric.appendChild(span);
+      });
     });
   </script>
 
