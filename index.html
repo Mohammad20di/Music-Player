@@ -46,6 +46,7 @@
       flex-wrap: wrap;
       justify-content: center;
       gap: 8px;
+      direction: rtl;
       z-index: 1;
     }
 
@@ -120,7 +121,7 @@
       const span = document.createElement("span");
       span.className = "word";
       span.textContent = word;
-      span.style.animationDelay = `${i * 0.4}s`; // فاصله بین ظاهر شدن هر کلمه
+      span.style.animationDelay = `${i * 0.4}s`;
       lyric.appendChild(span);
     });
   </script>
